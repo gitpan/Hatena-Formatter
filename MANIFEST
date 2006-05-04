@@ -1,5 +1,7 @@
+Changes
 README
 MANIFEST
+META.yml
 lib/Hatena/Formatter.pm
 lib/Hatena/Formatter/AutoLinkHatenaID.pm
 Makefile.PL

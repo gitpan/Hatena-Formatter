@@ -1,0 +1,6 @@
+0.02    2006-05-04T12:30:00+09:00
+        - Oops. bug fix to keyword_config opiton is not worked.
+        - Added Changes and META.yml to MANIFEST.
+
+0.01    2006-05-04T12:00:00+09:00
+        - First version, released on an unsuspecting world.

@@ -7,7 +7,7 @@ use Hatena::Formatter::AutoLinkHatenaID;
 use Hatena::Keyword 0.04;
 use Text::Hatena;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 __PACKAGE__->mk_accessors(qw( text html ));
 
@@ -18,8 +18,8 @@ sub new {
     my %opt   = @_;
 
     my $self = bless {
-	%opt,
-	hooks => {},
+        %opt,
+        hooks => {},
     }, $class;
     $self->init;
 
@@ -31,8 +31,8 @@ sub init {
 
     if (ref($self->{text_config})) {
         # hatena text init
-	my $hatenaid_href = delete $self->{text_config}->{hatenaid_href};
-	$Hatena::Formatter::AutoLinkHatenaID::HREF = $hatenaid_href if $hatenaid_href;
+        my $hatenaid_href = delete $self->{text_config}->{hatenaid_href};
+        $Hatena::Formatter::AutoLinkHatenaID::HREF = $hatenaid_href if $hatenaid_href;
         $self->{htext} = Text::Hatena->new(
             sectionanchor => "\x{25a0}",
             %{ $self->{text_config} },
@@ -54,7 +54,7 @@ sub register {
 sub run_hook {
     my($self, $hook) = @_;
     for my $action (@{ $self->{hooks}->{$hook} }) {
-	$action->{callback}($self, $action->{option});
+        $action->{callback}($self, $action->{option});
     }
 }
 
@@ -77,18 +77,18 @@ sub process {
     $self->html($text);
 
     if ($self->{htext}) {
-	$self->run_hook('text_init');
-	$self->{htext}->parse($self->html);
-	$self->html($self->{htext}->html);
+        $self->run_hook('text_init');
+        $self->{htext}->parse($self->html);
+        $self->html($self->{htext}->html);
     }
     $self->run_hook('text_finalize');
 
     if (ref($self->{hkeyword})) {
-	$self->run_hook('keyword_init');
-	$self->html($self->{hkeyword}->markup_as_html($self->html, {
-	    a_class => 'keyword',
-	    %{ $self->{text_config} },
-	}));
+        $self->run_hook('keyword_init');
+        $self->html($self->{hkeyword}->markup_as_html($self->html, {
+            a_class => 'keyword',
+            %{ $self->{keyword_config} },
+        }));
     }
     $self->run_hook('keyword_finalize');
 
