@@ -7,7 +7,7 @@ use Hatena::Formatter::AutoLinkHatenaID;
 use Hatena::Keyword 0.04;
 use Text::Hatena;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 __PACKAGE__->mk_accessors(qw( text html ));
 
@@ -69,7 +69,7 @@ sub process {
     $text = $self->html;
     my $i = 0;
     my %tmp = ();
-    $text =~ s{^>\|\|(.*?)^\|\|<}{
+    $text =~ s{(^>\|\|.*?^\|\|<)}{
         $i++;
         $tmp{$i} = $1;
         "<%!Hatena super pre--$i--%>";
@@ -80,6 +80,13 @@ sub process {
         $self->run_hook('text_init');
         $self->{htext}->parse($self->html);
         $self->html($self->{htext}->html);
+
+        #super pre formatting
+        for my $c (keys %tmp) {
+            $self->{htext}->parse($tmp{$c});
+            $tmp{$c} = $self->{htext}->html;
+            $tmp{$c} =~ s{^<div class="section">\n\t(.+)\n</div>$}{$1}sm;
+        }
     }
     $self->run_hook('text_finalize');
 
@@ -93,7 +100,7 @@ sub process {
     $self->run_hook('keyword_finalize');
 
     $text = $self->html;
-    $text =~ s{<%!Hatena super pre--(\d+)--%>}{qq(<pre class="hatena-super-pre">$tmp{$1}</pre>)}gsme;
+    $text =~ s{<p><%!Hatena super pre--(\d+)--%></p>}{$tmp{$1}}gsme;
     $self->html($text);
     $self->run_hook('suprepre_finalize');
 

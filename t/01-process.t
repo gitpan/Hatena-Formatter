@@ -8,6 +8,7 @@ my $text = qq(*contents
 [HomePage]
 Perl5 or Pugs?
 >||
+<block>
 Perl5 or Pugs?
 id:yappo
 ||<
@@ -17,10 +18,11 @@ my $ret1 = qq(<div class="section">
 \t<h3><a href="http://example.org/#p1" name="p1"><span class="sanchor">@</span></a> contents</h3>
 \t<p>[HomePage]</p>
 \t<p>Perl5 or <a class="keyword" href="http://d.hatena.ne.jp/keyword/Pugs">Pugs</a>?</p>
-\t<p><pre class="hatena-super-pre">
+\t<pre class="hatena-super-pre">
+&lt;block&gt;
 Perl5 or Pugs?
 id:yappo
-</pre></p>
+</pre>
 \t<p><a href="/yappo/">id:yappo</a></p>
 </div>);
 
@@ -28,10 +30,11 @@ my $ret2 = qq(<div class="section">
 \t<h3><a href="http://example.org/#p1" name="p1"><span class="sanchor">@</span></a> contents</h3>
 \t<p><a href="?HomePage">HomePage</a></p>
 \t<p>Perl5 or <a class="keyword" href="http://d.hatena.ne.jp/keyword/Pugs">Pugs</a>?</p>
-\t<p><pre class="hatena-super-pre">
+\t<pre class="hatena-super-pre">
+&lt;block&gt;
 Perl5 or Pugs?
 id:yappo
-</pre></p>
+</pre>
 \t<p><a href="?yappo">id:yappo</a></p>
 </div>);
 

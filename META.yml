@@ -14,4 +14,4 @@ requires:
   Class::Accessor::Fast: 0
   Hatena::Keyword: 0.04
   Text::Hatena: 0
-version: 0.02
+version: 0.03
